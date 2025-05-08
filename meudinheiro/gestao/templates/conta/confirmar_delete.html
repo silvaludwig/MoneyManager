@@ -1,1 +1,48 @@
-CONFIRMAR DELETE DESPESA
+{% extends "base.html" %}
+
+{% block title %}Excluir Conta{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3><i class="bi bi-exclamation-triangle"></i> Confirmar Exclusão</h3>
+                </div>
+                <div class="card-body">
+                    <p>Você está prestes a excluir a seguinte conta:</p>
+                    
+                    <div class="alert alert-danger">
+                        <h5>{{ conta.nome }}</h5>
+                        <p class="mb-1">Tipo: {{ conta.get_categoria_display }}</p>
+                        <p class="mb-1">Saldo Atual: R$ {{ conta.saldo_atual|floatformat:2 }}</p>
+                        <p class="mb-0">Status: {% if conta.ativa %}Ativa{% else %}Inativa{% endif %}</p>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <h5><i class="bi bi-exclamation-triangle-fill"></i> Atenção!</h5>
+                        <p class="mb-0">
+                            Esta conta possui {{ conta.receitas.count }} receita(s) e 
+                            {{ conta.despesas.count }} despesa(s) vinculadas. 
+                            Todas serão excluídas permanentemente!
+                        </p>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'detalhe_conta' conta.pk %}" class="btn btn-secondary me-md-2">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Confirmar Exclusão
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

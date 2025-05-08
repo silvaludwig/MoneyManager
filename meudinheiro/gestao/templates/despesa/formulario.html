@@ -1,1 +1,144 @@
-FORMULARIO DESPESA
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="bi bi-arrow-up-circle"></i> {{ titulo }}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.descricao.id_for_label }}" class="form-label">Descrição</label>
+                            {{ form.descricao }}
+                            {% if form.descricao.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.descricao.errors|join:", " }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.valor.id_for_label }}" class="form-label">Valor</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">R$</span>
+                                    {{ form.valor }}
+                                </div>
+                                {% if form.valor.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.valor.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.data_vencimento.id_for_label }}" class="form-label">Data</label>
+                                {{ form.data_vencimento }}
+                                {% if form.data_vencimento.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.data_vencimento.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.categoria.id_for_label }}" class="form-label">Categoria</label>
+                                {{ form.categoria }}
+                                {% if form.categoria.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.categoria.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.conta.id_for_label }}" class="form-label">Conta</label>
+                                {{ form.conta }}
+                                {% if form.conta.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.conta.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.recorrente.id_for_label }}" class="form-label">Recorrência</label>
+                                {{ form.recorrente }}
+                                {% if form.recorrente.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.recorrente.errors|join:", " }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.efetivada.id_for_label }}" class="form-label">Status</label>
+                                <div class="form-check form-switch mt-2">
+                                    {{ form.efetivada }}
+                                    <label class="form-check-label" for="{{ form.efetivada.id_for_label }}">Efetivada</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.parcelas.id_for_label }}" class="form-label">Parcelas</label>
+                                {{ form.parcelas }}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.parcela_atual.id_for_label }}" class="form-label">Parcela Atual</label>
+                                {{ form.parcela_atual }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.observacoes.id_for_label }}" class="form-label">Observações</label>
+                            {{ form.observacoes }}
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'lista_despesas' %}" class="btn btn-secondary me-md-2">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Salvar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Atualiza o label da conta selecionada
+    const contaSelect = document.getElementById('id_conta');
+    if (contaSelect) {
+        contaSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            console.log('Conta selecionada:', selectedOption.text);
+        });
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}
