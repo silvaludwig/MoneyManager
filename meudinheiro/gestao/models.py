@@ -133,6 +133,13 @@ class Despesa(TransacaoBase):
         ('outros', 'Outros'),
     ]
 
+    conta = models.ForeignKey(
+        Conta,
+        on_delete=models.PROTECT,
+        related_name='despesas'  # Isso cria o atributo despesas na Conta
+    )
+
+
     categoria = models.CharField(
         max_length=20,
         choices=CATEGORIA_CHOICES,
@@ -165,6 +172,11 @@ class Receita(TransacaoBase):
         ('outros', 'Outros'),
     ]
 
+    conta = models.ForeignKey(
+        Conta,
+        on_delete=models.PROTECT,
+        related_name='receitas'  # Isso cria o atributo receitas na Conta
+    )
     categoria = models.CharField(
         max_length=20,
         choices=CATEGORIA_CHOICES,
