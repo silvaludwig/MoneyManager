@@ -88,25 +88,48 @@
                                 {% endif %}
                             </div>
                             <div class="col-md-6 text-light">
-                                <label for="{{ form.efetivada.id_for_label }}" class="form-label">Status</label>
-                                <div class="form-check form-switch mt-2">
-                                    {{ form.efetivada }}
+                                <label class="form-label">Status</label>
+                                <div class="form-check form-switch">
+                                    <input type="checkbox" 
+                                        class="form-check-input" 
+                                        id="{{ form.efetivada.id_for_label }}"
+                                        name="{{ form.efetivada.html_name }}"
+                                        {% if form.efetivada.value %}checked{% endif %}>
                                     <label class="form-check-label" for="{{ form.efetivada.id_for_label }}">Efetivada</label>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="row mb-3 text-light">
+                        <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="{{ form.parcelas.id_for_label }}" class="form-label">Parcelas</label>
-                                {{ form.parcelas }}
+                                <label for="{{ form.parcelas.id_for_label }}" class="form-label text-light">Parcelas</label>
+                                <input type="number" 
+                                    class="form-control bg-dark text-light" 
+                                    id="{{ form.parcelas.id_for_label }}"
+                                    name="{{ form.parcelas.html_name }}"
+                                    value="{{ form.parcelas.value|default_if_none:'1' }}"
+                                    min="1" max="36">
+                                {% if form.parcelas.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.parcelas.errors|join:", " }}
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
-                                <label for="{{ form.parcela_atual.id_for_label }}" class="form-label">Parcela Atual</label>
-                                {{ form.parcela_atual }}
+                                <label for="{{ form.parcela_atual.id_for_label }}" class="form-label text-light">Parcela Atual</label>
+                                <input type="number" 
+                                    class="form-control bg-dark text-light" 
+                                    id="{{ form.parcela_atual.id_for_label }}"
+                                    name="{{ form.parcela_atual.html_name }}"
+                                    value="{{ form.parcela_atual.value|default_if_none:'1' }}"
+                                    min="1">
+                                {% if form.parcela_atual.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.parcela_atual.errors|join:", " }}
+                                </div>
+                                {% endif %}
                             </div>
-                        </div>
-                        
+                        </div>                        
                         <div class="mb-3 text-light">
                             <label for="{{ form.observacoes.id_for_label }}" class="form-label">Observações</label>
                             {{ form.observacoes }}

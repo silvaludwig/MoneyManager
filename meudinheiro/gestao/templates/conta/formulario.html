@@ -56,9 +56,16 @@
                             </div>
                         </div>
                         
-                        <div class="mb-3 form-check form-switch text-light">
-                            {{ form.ativa }}
-                            <label class="form-check-label" for="{{ form.ativa.id_for_label }}">Conta Ativa</label>
+                        <div class="col-md-6 text-light">
+                            <label class="form-label">Status</label>
+                            <div class="form-check form-switch">
+                                <input type="checkbox" 
+                                    class="form-check-input" 
+                                    id="{{ form.ativa.id_for_label }}"
+                                    name="{{ form.ativa.html_name }}"
+                                    {% if form.ativa.value %}checked{% endif %}>
+                                <label class="form-check-label" for="{{ form.ativa.id_for_label }}">Conta Ativa</label>
+                            </div>
                         </div>
                         
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">

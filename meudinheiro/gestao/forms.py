@@ -22,11 +22,20 @@ class DespesaForm(forms.ModelForm):
     class Meta:
         model = Despesa
         fields = ['descricao', 'valor', 'data_vencimento', 'categoria', 
-                 'recorrente', 'conta', 'parcelas', 'observacoes']
+                 'recorrente', 'conta', 'parcelas', 'parcela_atual', 'efetivada', 'observacoes']
         widgets = {
             'descricao': forms.TextInput(attrs={'placeholder': 'Descrição da despesa'}),
             'valor': forms.NumberInput(attrs={'step': '0.01', 'min': '0.01'}),
             'observacoes': forms.Textarea(attrs={'rows': 3}),
+                'parcelas': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': '1',
+                'max': '36'
+            }),
+            'parcela_atual': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': '1'
+            }),
         }
         labels = {
             'valor': 'Valor (R$)',
@@ -56,7 +65,7 @@ class ReceitaForm(forms.ModelForm):
     class Meta:
         model = Receita
         fields = ['descricao', 'valor', 'data_vencimento', 'categoria', 
-                 'recorrente', 'conta', 'origem', 'observacoes']
+                 'recorrente', 'conta', 'origem','efetivada','observacoes']
         widgets = {
             'descricao': forms.TextInput(attrs={'placeholder': 'Descrição da receita'}),
             'valor': forms.NumberInput(attrs={'step': '0.01', 'min': '0.01'}),
@@ -74,7 +83,7 @@ class ContaForm(forms.ModelForm):
 
     class Meta:
         model = Conta
-        fields = ['nome', 'saldo_inicial', 'categoria']
+        fields = ['nome', 'saldo_inicial', 'ativa', 'categoria']
         widgets = {
             'nome': forms.TextInput(attrs={'placeholder': 'Nome da conta'}),
             'saldo_inicial': forms.NumberInput(attrs={'step': '0.01'}),

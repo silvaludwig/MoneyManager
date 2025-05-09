@@ -9,7 +9,7 @@
     <!-- Cards Resumo -->
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
-            <div class="card receita-bg">
+            <div class="card receita-bg text-light">
                 <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-arrow-down-circle"></i> Receitas</h5>
                     <h2 class="card-text">R$ {{ total_receitas|floatformat:2 }}</h2>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="col-md-4 mb-3">
-            <div class="card despesa-bg">
+            <div class="card despesa-bg text-light">
                 <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-arrow-up-circle"></i> Despesas</h5>
                     <h2 class="card-text">R$ {{ total_despesas|floatformat:2 }}</h2>
@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-4 mb-3">
             <div class="card {% if saldo >= 0 %}receita-bg{% else %}despesa-bg{% endif %}">
-                <div class="card-body">
+                <div class="card-body text-light">
                     <h5 class="card-title"><i class="bi bi-wallet2"></i> Saldo</h5>
                     <h2 class="card-text">R$ {{ saldo|floatformat:2 }}</h2>
                 </div>

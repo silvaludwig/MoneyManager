@@ -7,9 +7,9 @@
     <div class="row">
         <div class="col-lg-6 mx-auto">
             <div class="card receita-bg">
-                <div class="card-header">
+                <div class="card-header bg-light text-dark border-bottom border-secondary">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h3><i class="bi bi-arrow-down-circle"></i> Detalhes da Receita</h3>
+                        <h3><i class="bi bi-arrow-down-circle "></i> Detalhes da Receita</h3>
                         <div>
                             <a href="{% url 'editar_receita' receita.pk %}" class="btn btn-sm btn-primary me-1">
                                 <i class="bi bi-pencil"></i> Editar
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
+                    <div class="row mb-3 text-light">
                         <div class="col-md-6">
                             <h5>Descrição</h5>
                             <p>{{ receita.descricao }}</p>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     
-                    <div class="row mb-3">
+                    <div class="row mb-3 text-light">
                         <div class="col-md-6">
                             <h5>Data de Vencimento</h5>
                             <p>{{ receita.data_vencimento|date:"d/m/Y" }}</p>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     
-                    <div class="row mb-3">
+                    <div class="row mb-3 text-light">
                         <div class="col-md-6">
                             <h5>Categoria</h5>
                             <p>{{ receita.get_categoria_display }}</p>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     
-                    <div class="row mb-3">
+                    <div class="row mb-3 text-light">
                         <div class="col-md-6">
                             <h5>Recorrência</h5>
                             <p>{{ receita.get_recorrente_display }}</p>
