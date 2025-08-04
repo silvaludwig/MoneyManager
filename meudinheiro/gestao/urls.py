@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
-from .views import cadastro_usuario
+from .views import cadastro_usuario, custom_logout
 
 urlpatterns = [
     # Páginas principais
@@ -34,10 +34,12 @@ urlpatterns = [
         template_name='gestao/auth/login.html',
         extra_context={'title': 'Login'}
     ), name="login"),
-    path("logout/", auth_views.LogoutView.as_view(
-        template_name='gestao/auth/logout.html',
-        extra_context={'title': 'Logout'}
-    ), name="logout"),
+    # path("logout/", auth_views.LogoutView.as_view(
+    #     template_name='gestao/auth/logout.html',
+    #     extra_context={'title': 'Logout'}
+    # ), name="logout"),
+    # Custom logout view
+    path('logout/', custom_logout, name='logout'),
     path("password_reset/", auth_views.PasswordResetView.as_view(
         template_name='gestao/auth/password_reset.html',
         email_template_name='gestao/auth/password_reset_email.html',

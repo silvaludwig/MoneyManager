@@ -12,6 +12,13 @@ class Conta(models.Model):
         ('investimento', 'Investimento'),
     ]
     
+    id_externo = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="ID Externo da API"
+    )
+
     usuario = models.ForeignKey(
         User, 
         on_delete=models.CASCADE,
@@ -193,3 +200,40 @@ class Receita(TransacaoBase):
     class Meta:
         verbose_name = "Receita"
         verbose_name_plural = "Receitas"
+
+class ConexaoBancaria(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    nome_banco = models.CharField(max_length=100)
+    token_acesso = models.CharField(max_length=255)
+    id_conexao_api = models.CharField(max_length=255, unique=True)  # ID da conexão na API externa
+    data_conexao = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.nome_banco} ({self.usuario.username})"
+    
+    class Meta:
+        verbose_name = "Conexão Bancária"
+        verbose_name_plural = "Conexões Bancárias"
+        ordering = ['-data_conexao']
+    
+    
+
+class TransacaoImportada(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    conta = models.ForeignKey(Conta, on_delete=models.CASCADE)
+    descricao = models.CharField(max_length=255)
+    valor = models.DecimalField(max_digits=15, decimal_places=2)
+    data = models.DateField()
+    tipo = models.CharField(max_length=10, choices=[('credito', 'Crédito'), ('debito', 'Débito')])
+    origem_api = models.CharField(max_length=100, blank=True, null=True)
+    categoria_api = models.CharField(max_length=100, blank=True, null=True)
+    id_api = models.CharField(max_length=255, unique=True)
+    importada = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Transação Importada"
+        verbose_name_plural = "Transações Importadas"
+        ordering = ['-data']
+    
+    def __str__(self):
+        return f"{self.descricao} - R${self.valor} ({self.tipo})"

@@ -1,11 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.utils import timezone
 from .models import Conta, Despesa, Receita
 from .forms import ReceitaForm, DespesaForm, ContaForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
+from django.views.decorators.http import require_http_methods
+
+@require_http_methods(["GET", "POST"])  # Permite ambos os métodos temporariamente
+def custom_logout(request):
+    if request.method == 'POST':
+        logout(request)
+        return redirect('index')
+    # Se for GET, mostra a página de confirmação
+    return render(request, 'gestao/auth/logout.html')
 
 @login_required
 def index(request):
