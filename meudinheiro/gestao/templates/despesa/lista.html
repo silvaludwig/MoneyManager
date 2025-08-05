@@ -17,18 +17,18 @@
             <form method="get" class="row g-3">
                 <div class="col-md-3 text-light">
                     <label for="data_inicio" class="form-label">De</label>
-                    <input type="date" class="form-control" id="data_inicio" name="data_inicio">
+                    <input type="date" class="form-control" id="data_inicio" name="data_inicio" value="{{ request.GET.data_inicio }}">
                 </div>
                 <div class="col-md-3 text-light">
                     <label for="data_fim" class="form-label">Até</label>
-                    <input type="date" class="form-control" id="data_fim" name="data_fim">
+                    <input type="date" class="form-control" id="data_fim" name="data_fim" value="{{ request.GET.data_fim }}">
                 </div>
                 <div class="col-md-3 text-light">
                     <label for="categoria" class="form-label">Categoria</label>
                     <select class="form-select" id="categoria" name="categoria">
                         <option value="">Todas</option>
-                        {% for value, label in form.fields.categoria.choices %}
-                            <option value="{{ value }}">{{ label }}</option>
+                        {% for value, label in categorias %}
+                            <option value="{{ value }}" {% if request.GET.categoria == value %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>

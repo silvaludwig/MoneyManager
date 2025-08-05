@@ -65,7 +65,19 @@ def dashboard(request):
 @login_required
 def lista_receitas(request):
     receitas = Receita.objects.filter(usuario=request.user).order_by('-data_vencimento')
-    return render(request, "receita/lista.html", {'receitas': receitas})
+
+    categoria = request.GET.get('categoria')
+    if categoria:
+        receitas = receitas.filter(categoria=categoria)
+
+    categorias = Receita.CATEGORIA_CHOICES
+
+    context = {
+        'receitas': receitas,
+        'categorias': categorias,
+    }
+
+    return render(request, "receita/lista.html", context)
 
 @login_required
 def nova_receita(request):
@@ -118,7 +130,19 @@ def detalhe_receita(request, pk):
 @login_required
 def lista_despesas(request):
     despesas = Despesa.objects.filter(usuario=request.user).order_by('-data_vencimento')
-    return render(request, "despesa/lista.html", {'despesas': despesas})
+
+    categoria = request.GET.get('categoria')
+    if categoria:
+        despesas = despesas.filter(categoria=categoria)
+
+    categorias = Despesa.CATEGORIA_CHOICES
+
+    context = {
+        'despesas': despesas,
+        'categorias': categorias,
+    }
+
+    return render(request, "despesa/lista.html", context)
 
 @login_required
 def nova_despesa(request):

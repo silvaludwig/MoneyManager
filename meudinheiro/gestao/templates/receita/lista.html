@@ -17,18 +17,18 @@
             <form method="get" class="row g-3">
                 <div class="col-md-3 text-light">
                     <label for="data_inicio" class="form-label">De</label>
-                    <input type="date" class="form-control" id="data_inicio" name="data_inicio">
+                    <input type="date" class="form-control" id="data_inicio" name="data_inicio" value="{{ request.GET.data_inicio }}">
                 </div>
                 <div class="col-md-3 text-light">
                     <label for="data_fim" class="form-label">Até</label>
-                    <input type="date" class="form-control" id="data_fim" name="data_fim">
+                    <input type="date" class="form-control" id="data_fim" name="data_fim" value="{{ request.GET.data_fim }}">
                 </div>
                 <div class="col-md-3 text-light">
                     <label for="categoria" class="form-label">Categoria</label>
                     <select class="form-select" id="categoria" name="categoria">
                         <option value="">Todas</option>
-                        {% for value, label in form.fields.categoria.choices %}
-                            <option value="{{ value }}">{{ label }}</option>
+                        {% for value, label in categorias %}
+                            <option value="{{ value }}" {% if request.GET.categoria == value %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -64,7 +64,7 @@
                         <tr>
                             <td>{{ receita.descricao }}</td>
                             <td class="text-success">R$ {{ receita.valor|floatformat:2 }}</td>
-                            <td>{{ receita.data_vencimento|date:"d/m/Y" }}</td>
+                            <td>{{ receita.data_recebimento|date:"d/m/Y" }}</td>
                             <td>{{ receita.get_categoria_display }}</td>
                             <td>
                                 {% if receita.efetivada %}
@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     {% endif %}
-                    
+
                     {% for num in page_obj.paginator.page_range %}
                     {% if page_obj.number == num %}
                     <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
@@ -115,7 +115,7 @@
                     <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
                     {% endif %}
                     {% endfor %}
-                    
+
                     {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
