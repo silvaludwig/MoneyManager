@@ -259,3 +259,37 @@ def cadastro_usuario(request):
     else:
         form = CadastroUsuarioForm()
     return render(request, "gestao/auth/cadastro.html", {"form": form})
+
+
+from .pluggy import services
+
+@login_required
+def importar_transacoes(request):
+    items = services.get_user_items()
+    contas = []
+    transacoes = []
+
+    for item in items:
+        contas_item = services.get_accounts(item['id'])
+        contas.extend(contas_item)
+
+        for conta in contas_item:
+            transacoes_conta = services.get_transactions(conta['id'])
+            transacoes.extend(transacoes_conta)
+
+    # Exemplo: passar para o template ou salvar no banco
+    return render(request, "gestao/pluggy/resultado_importacao.html", {
+        "contas": contas,
+        "transacoes": transacoes
+    })
+
+
+@login_required
+def importar_contas(request):
+    item_id = "f70298e5-0593-45d3-b4b5-e53e4f5d433e"  # ID que você obteve da API
+
+    contas = services.get_accounts(item_id)
+
+    return render(request, "gestao/pluggy/contas.html", {
+        "contas": contas
+    })

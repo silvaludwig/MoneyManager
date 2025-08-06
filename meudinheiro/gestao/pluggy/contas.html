@@ -1,0 +1,29 @@
+<!-- gestao/templates/gestao/pluggy/contas.html -->
+{% extends 'templates/base.html' %}
+
+{% block title %}Contas Bancárias{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4"><i class="bi bi-bank"></i> Contas Pluggy</h2>
+
+    <div class="row">
+        {% for conta in contas %}
+        <div class="col-md-4">
+            <div class="card mb-4 bg-dark text-light">
+                <div class="card-body">
+                    <h5 class="card-title">{{ conta.name }}</h5>
+                    <p class="card-text">
+                        <strong>Tipo:</strong> {{ conta.type }}<br>
+                        <strong>Subtipo:</strong> {{ conta.subtype }}<br>
+                        <strong>Número:</strong> {{ conta.number }}<br>
+                        <strong>Saldo:</strong> {{ conta.balance }} {{ conta.currencyCode }}<br>
+                        <strong>Banco:</strong> {{ conta.marketingName }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

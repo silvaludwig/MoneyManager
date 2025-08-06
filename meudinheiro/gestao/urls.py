@@ -69,4 +69,6 @@ urlpatterns = [
 
     # Cadastro de usuário
     path("cadastro/", cadastro_usuario, name="cadastro_usuario"),
+    path("importar-transacoes/", views.importar_transacoes, name="importar_transacoes"),
+    path("importar-contas/", views.importar_contas, name="importar_contas"),
 ]

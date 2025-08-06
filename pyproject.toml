@@ -8,7 +8,10 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "django"
+    "django",
+    "requests",
+    "environ",
+    "python-decouple"
 ]
 
 
